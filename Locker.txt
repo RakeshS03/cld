@@ -1,0 +1,239 @@
+sudo apt install docker.io
+
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo systemctl status docker
+
+sudo docker ps -a
+sudo docker ps -l
+
+sudo docker pull ubuntu
+sudo docker run ubuntu
+sudo docker run ubuntu echo "hello from docker image"
+sudo docker run -it ubuntu
+
+sudo docker stop <container_id>
+sudo docker start <container_id>
+sudo docker restart <container_id>
+sudo docker rm -f <container_id> #forcefully remove
+sudo docker rm -v <container_id> #remove volumes
+
+sudo docker images
+sudo docker rmi -f <image_name>
+
+sudo docker exec <container_id> <cmd>  #sudo docker 00224fba2f96 exec /bin/bash
+
+sudo docker login
+sudo docker info
+sudo docker history --human <image_name>
+sudo docker search <image_name>
+
+sudo docker update --cpus 2 <container_id>
+sudo docker update --memory 500M <container_id>
+
+docker volume create
+docker volume ls
+docker logout
+
+--------
+
+DOCKER:
+sudo usermod -aG docker $USER
+sudo systemctl start docker
+sudo systemctl status docker
+mkdir test
+cd test
+touch readme.txt
+touch DockerFile
+ls
+gedit DockerFile
+FROM ubuntu
+CMD ["echo","hello i am docker"]S
+sudo docker build -t mydocker .
+sudo docker images
+sudo docker run mydocker
+sudo chown -R $(whoami) ~/.docker
+docker login
+docker images
+docker ps
+docker ps -a
+docker pull ubuntu
+docker run ubuntu
+docker run -d ubuntu
+docker run -it ubuntu /bin/bash
+
+------
+
+sudo apt update -y
+
+wget https://get.docker.com -O get-docker.sh
+sudo sh get-docker.sh
+sudo docker version
+
+if docker not started
+sudo systemctl start docker
+sudo systemctl status docker
+sudo systemctl enable docker
+sudo docker version
+
+mkdir modellab
+cd modellab
+touch index.html
+sudo gedit index.html
+index.html content:                HELLO WORLD
+touch dockerfile
+sudo gedit dockerfile
+
+dockerfile content:
+
+FROM nginx
+COPY index.html /usr/share/nginx/html
+
+
+sudo docker build -t modellab .
+sudo docker images
+sudo docker run -p 8080:80 modellab
+visit in chrome: http://localhost:8080 see if hello world shown
+
+PULL AND PUSH IN DOCKER
+create a repo with public access in docker hub
+docker login
+username:sowndarya0405
+password:taurus0405@
+sudo docker tag modellab:latest sowndarya0405/modellab
+sudo docker push sowndarya0405/modellab:latest
+sudo docker pull -ubuntu
+
+sudo docker network create --driver bridge demo-network
+
+------
+
+sudo apt-get install docker
+go to Google in linux -> docker hub
+click the first link - sign up(emailid - password)
+Then in the cmd prompt : docker login
+
+
+docker --version
+sudo apt-get install docker
+create a dir:
+	mkdir dock
+change dir:
+	cd dock
+create vol:
+	docker volume create
+To show vol:
+	docker volume ls
+To del vol:
+	docker volume rm <vol-id>
+To show network:
+	docker network ls
+Images:
+To dwld image:
+	docker pull ubuntu
+To show images:
+	docker images
+Creating container for the image:
+	docker run -it  ubuntu bash (or) docker run -it -d ubuntu 
+To list the containers:
+	docker ps -a
+To run the container:
+	docker exec -it <container-id> bash
+To stop the container from running:
+	exit
+	docker stop <container-id>
+To del the container:
+	docker rm <container-id>
+To create a bridge btwn containers:
+	docker network create <bridge-name>
+To show network:
+	docker network ls
+To add the container in the network:
+	docker network connect <bridge-name> <any container-id>
+To show the configuration and info:
+	docker network inspect <bridge-name>
+To disconnect the container:
+	docker network disconnect <bridge-name> <container-id>
+To restart the container(stopped container):
+	docker restart <container-id>
+To kill the container id:
+	docker kill <container-id>
+To create an image from an image:
+	sudo docker commit <container-id>
+
+--------
+
+sudo apt install docker.io
+
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo systemctl status docker
+
+sudo docker ps -a
+sudo docker ps -l
+
+sudo docker pull ubuntu
+sudo docker run ubuntu
+sudo docker run ubuntu echo "hello from docker image"
+sudo docker run -it ubuntu
+
+sudo docker stop <container_id>
+sudo docker start <container_id>
+sudo docker restart <container_id>
+sudo docker rm -f <container_id> #forcefully remove
+sudo docker rm -v <container_id> #remove volumes
+
+sudo docker images
+sudo docker rmi -f <image_name>
+
+sudo docker exec <container_id> <cmd>  #sudo docker 00224fba2f96 exec /bin/bash
+
+sudo docker login
+sudo docker info
+sudo docker history --human <image_name>
+sudo docker search <image_name>
+
+sudo docker update --cpus 2 <container_id>
+sudo docker update --memory 500M <container_id>
+
+docker volume create
+docker volume ls
+docker logout
+
+--------
+
+app....
+
+sudo rm /var/lib/dpkg/lock-frontend
+sudo rm /var/lib/dpkg/lock
+
+sudo dpkg --configure -a
+
+
+sudo apt update
+sudo apt upgrade
+sudo apt install docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+mkdir docker_ab
+cd docker_ab
+nano sum.py
+
+n=int(input("Enter n: "))
+result=sum(range(1,n+1))
+print(f"Sum of 1 to {n}: {result}")
+
+nano Dockerfile 	#file name must be "Dockerfile"
+
+from python:3.9
+copy sum.py /sum.py
+cmd ["python3", "/sum.py"]
+
+sudo docker build -t sum_image .
+sudo docker run -it sum_image
+
+
+
+
+
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Information</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin: 20px;
+        }
+        .auth-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .auth-buttons a {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .auth-buttons a:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Patient Information System</h1>
+    
+    <!-- Authentication Buttons -->
+    <div class="auth-buttons">
+        <!-- Login Button -->
+        <a href="/login">Login</a>
+        
+        <!-- Logout Button -->
+        <a href="/logout">Logout</a>
+    </div>
+    
+    <h1>Enter Patient Information</h1>
+    <form id="patientForm">
+        <label for="name">Patient Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="id">Patient ID:</label>
+        <input type="text" id="id" name="id" required><br>
+
+        <label for="doctor">Patient Doctor:</label>
+        <input type="text" id="doctor" name="doctor" required><br>
+
+        <label for="medicine">Patient Medicine:</label>
+        <input type="text" id="medicine" name="medicine" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Stored Patients</h2>
+    <button id="fetchPatients">Fetch Patients</button>
+    <ul id="patientList"></ul>
+
+    <h2>Update & Delete Patient Information</h2>
+    <div class="form-container">
+        <form id="updatePatientForm">
+            <label for="updateId">Patient ID:</label>
+            <input type="text" id="updateId" name="updateId" required><br>
+
+            <label for="updateName">Patient Name:</label>
+            <input type="text" id="updateName" name="updateName"><br>
+
+            <label for="updateDoctor">Patient Doctor:</label>
+            <input type="text" id="updateDoctor" name="updateDoctor"><br>
+
+            <label for="updateMedicine">Patient Medicine:</label>
+            <input type="text" id="updateMedicine" name="updateMedicine"><br>
+
+            <button type="submit">Update</button>
+        </form>
+
+        <form id="deletePatientForm">
+            <label for="deleteId">Patient ID:</label>
+            <input type="text" id="deleteId" name="deleteId" required><br>
+
+            <button type="submit" class="delete">Delete</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript remains the same for form handling
+    </script>
+</body>
+</html>

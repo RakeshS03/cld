@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Information</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow-y: auto; /* Allow vertical scrolling */
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin: 20px;
+        }
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap; /* Wrap forms on smaller screens */
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px;
+            box-sizing: border-box;
+        }
+        .form-container > form {
+            flex: 1;
+            margin: 0 10px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            min-width: 280px; /* Ensure forms are not too narrow */
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #34495e;
+            font-size: 14px;
+        }
+        form input {
+            width: calc(100% - 22px);
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        form button {
+            width: 100%;
+            padding: 10px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        form button:hover {
+            background: #2980b9;
+        }
+        #fetchPatients {
+            background: #e74c3c;
+        }
+        #fetchPatients:hover {
+            background: #c0392b;
+        }
+        #patientList {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 20px;
+        }
+        #patientList li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+        }
+        #patientList button {
+            margin-top: 5px;
+            padding: 5px 10px;
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+        #patientList button:hover {
+            background: #c0392b;
+        }
+        .update {
+            background: #f39c12;
+        }
+        .update:hover {
+            background: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter Patient Information</h1>
+    <form id="patientForm">
+        <label for="name">Patient Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="id">Patient ID:</label>
+        <input type="text" id="id" name="id" required><br>
+
+        <label for="doctor">Patient Doctor:</label>
+        <input type="text" id="doctor" name="doctor" required><br>
+
+        <label for="medicine">Patient Medicine:</label>
+        <input type="text" id="medicine" name="medicine" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Stored Patients</h2>
+    <button id="fetchPatients">Fetch Patients</button>
+    <ul id="patientList"></ul>
+
+    <h2>Update & Delete Patient Information</h2>
+    <div class="form-container">
+        <form id="updatePatientForm">
+            <label for="updateId">Patient ID:</label>
+            <input type="text" id="updateId" name="updateId" required><br>
+
+            <label for="updateName">Patient Name:</label>
+            <input type="text" id="updateName" name="updateName"><br>
+
+            <label for="updateDoctor">Patient Doctor:</label>
+            <input type="text" id="updateDoctor" name="updateDoctor"><br>
+
+            <label for="updateMedicine">Patient Medicine:</label>
+            <input type="text" id="updateMedicine" name="updateMedicine"><br>
+
+            <button type="submit">Update</button>
+        </form>
+
+        <form id="deletePatientForm">
+            <label for="deleteId">Patient ID:</label>
+            <input type="text" id="deleteId" name="deleteId" required><br>
+
+            <button type="submit" class="delete">Delete</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('patientForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const id = document.getElementById('id').value;
+            const doctor = document.getElementById('doctor').value;
+            const medicine = document.getElementById('medicine').value;
+
+            try {
+                await fetch('/api/patients', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, id, doctor, medicine })
+                });
+                alert('Patient added successfully');
+                document.getElementById('patientForm').reset();
+            } catch (error) {
+                console.error('Error adding patient:', error);
+                alert('Failed to add patient');
+            }
+        });
+
+        document.getElementById('fetchPatients').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/patients');
+                const patients = await response.json();
+                const patientList = document.getElementById('patientList');
+                patientList.innerHTML = '';
+                patients.forEach(patient => {
+                    const li = document.createElement('li');
+                    li.textContent = `Name: ${patient.name}, ID: ${patient._id}, Doctor: ${patient.doctor}, Medicine: ${patient.medicine}`;
+                    const updateButton = document.createElement('button');
+                    updateButton.textContent = 'Update';
+                    updateButton.className = 'update';
+                    updateButton.onclick = () => {
+                        document.getElementById('updateId').value = patient._id;
+                        document.getElementById('updateName').value = patient.name;
+                        document.getElementById('updateDoctor').value = patient.doctor;
+                        document.getElementById('updateMedicine').value = patient.medicine;
+                    };
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'delete';
+                    deleteButton.onclick = async () => {
+                        try {
+                            await fetch(`/api/patients/${patient._id}`, {
+                                method: 'DELETE'
+                            });
+                            alert('Patient deleted successfully');
+                            document.getElementById('fetchPatients').click();
+                        } catch (error) {
+                            console.error('Error deleting patient:', error);
+                            alert('Failed to delete patient');
+                        }
+                    };
+                    li.appendChild(updateButton);
+                    li.appendChild(deleteButton);
+                    patientList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching patients:', error);
+                alert('Failed to fetch patients');
+            }
+        });
+
+        document.getElementById('updatePatientForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('updateId').value;
+            const name = document.getElementById('updateName').value;
+            const doctor = document.getElementById('updateDoctor').value;
+            const medicine = document.getElementById('updateMedicine').value;
+
+            try {
+                await fetch(`/api/patients/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, doctor, medicine })
+                });
+                alert('Patient updated successfully');
+                document.getElementById('updatePatientForm').reset();
+                document.getElementById('fetchPatients').click();
+            } catch (error) {
+                console.error('Error updating patient:', error);
+                alert('Failed to update patient');
+            }
+        });
+
+        document.getElementById('deletePatientForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('deleteId').value;
+
+            try {
+                await fetch(`/api/patients/${id}`, {
+                    method: 'DELETE'
+                });
+                alert('Patient deleted successfully');
+                document.getElementById('deletePatientForm').reset();
+                document.getElementById('fetchPatients').click();
+            } catch (error) {
+                console.error('Error deleting patient:', error);
+                alert('Failed to delete patient');
+            }
+        });
+    </script>
+</body>
+</html>

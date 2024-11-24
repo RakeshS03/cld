@@ -1,0 +1,32 @@
+ Simulation using CloudSIM:
+ 1.https://github.com/Cloudslab/cloudsim/releases
+ and download the source code(zip file
+2.Go to the link https://commons.apache.org/proper/commons-math/download_math.cgi
+ download math4-4.0-beta1-bin.zip file and extract the file
+ 3. Install Eclipse from the googl
+ 4.Click download->choose eclipse IDE for java Developers->Install->Launch
+ 5.Click Launch->eclipse page will be opened
+ 6.Click file->new->java project
+ 7.Enter name and disable the default location and enter the cloudsim folder location that you
+ downloaded from the github and click finish
+8.Now in the package explorer, right click the cloudsim
+9.In properties page,java build path->libraries->click module path->Add external JAR
+10.Go to the math folder and upload all the files by ctrl+A
+ 11.Click Apply and click then apply and close
+12.Now go to eclipse web page->under cloudsim->cloudsim-5.0/modules/cloudsim-examples..
+>open the first folder->click the example1.java and the code will be visible->run the code
+
+
+
+ Performance Analysis using cloud Analyst:
+ 1.Go to the link https://sourceforge.net/projects/cloudanalystnetbeans/
+ the zip file
+ 2.Go to the link https://netbeans.apache.org/front/main/download/nb17/index.html
+ install Apache-NetBeans-17-bin-windows-x64.exe(SHA-512,PGP ASC)
+3.Once you downloaded, click the exe file then configuration takes place
+ 8.Open Project->Go to the cloud analyst folder->click the cloud analyst file->open project
+ 9.The projects will be showed up on the left and then click the play button
+10.World Map is showed up->click configure simulation->Done
+ 
+
+
