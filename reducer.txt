@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_WORD_LEN 100
+#define MAX_WORDS 1000
+
+typedef struct {
+    char word[MAX_WORD_LEN];
+    int count;
+} Word;
+
+int main() {
+    char fileName[256];
+    FILE *file;
+    Word words[MAX_WORDS];
+    int wordCount = 0;
+
+    printf("Enter the input file name: ");
+    scanf("%s", fileName);
+
+    file = fopen(fileName, "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    char tempWord[MAX_WORD_LEN];
+    while (fscanf(file, "%s", tempWord) != EOF) {
+        // Convert word to lowercase
+        for (int i = 0; tempWord[i]; i++) {
+            tempWord[i] = tolower(tempWord[i]);
+        }
+
+        // Check if the word is already in the array
+        int found = 0;
+        for (int i = 0; i < wordCount; i++) {
+            if (strcmp(words[i].word, tempWord) == 0) {
+                words[i].count++;
+                found = 1;
+                break;
+            }
+        }
+
+        // If the word is new, add it to the array
+        if (!found) {
+            strcpy(words[wordCount].word, tempWord);
+            words[wordCount].count = 1;
+            wordCount++;
+            if (wordCount >= MAX_WORDS) {
+                printf("Error: Too many words in file.\n");
+                fclose(file);
+                return 1;
+            }
+        }
+    }
+
+    fclose(file);
+
+    // Print word counts
+    for (int i = 0; i < wordCount; i++) {
+        printf("(%s,%d)\n", words[i].word, words[i].count);
+    }
+
+    return 0;
+}
+
+
+sudo apt update
+sudo apt install build-essential
+
+gcc word_count.c -o word_count
+ create the text file and also change the name in the code accordingly and type anything inside the text
+
+./word_count
+
